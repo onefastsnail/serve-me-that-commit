@@ -1,6 +1,22 @@
 ---
 - name: Get Commit
-      command: 'git log --pretty=format:"%H" -n 1'
-      register: gitresult
+  command: git rev-parse --short HEAD
+  args:
+    chdir: /srv/www/deploy2.0
+  register: gitresult
 
-    - debug: msg="SHA-1 is {{ gitresult.before }}"
+- name: Creates directory
+  file: 
+    path: /srv/www/deploy2.0/versions/{{ gitresult.stdout }}
+    state: directory
+    owner: evermade 
+    group: evermade 
+    mode: 0755 
+    state: directory
+
+- name: Copy files
+  synchronize:
+    src: /code/dist/
+    dest: /srv/www/deploy2.0/versions/{{ gitresult.stdout }}/
+
+- debug: msg="SHA-1 is {{ gitresult.stdout }}"
