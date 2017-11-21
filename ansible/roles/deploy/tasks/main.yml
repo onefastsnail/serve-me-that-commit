@@ -1,0 +1,6 @@
+---
+- name: Get Commit
+      command: 'git log --pretty=format:"%H" -n 1'
+      register: gitresult
+
+    - debug: msg="SHA-1 is {{ gitresult.before }}"

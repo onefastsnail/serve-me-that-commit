@@ -1,0 +1,8 @@
+---
+- hosts: all
+  user: evermade
+  sudo: true
+  vars:
+    username: evermade
+  roles:
+   - { role: deploy, tags: [deploy] }
