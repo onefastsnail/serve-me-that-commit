@@ -2,21 +2,20 @@
 - name: Get Commit
   command: git rev-parse --short HEAD
   args:
-    chdir: /srv/www/deploy2.0
-  register: gitresult
+    chdir: "{{ dist_dir }}"
+  register: gitcommit
 
 - name: Creates directory
   file: 
-    path: /srv/www/deploy2.0/versions/{{ gitresult.stdout }}
+    path: "{{ versions_dir }}/{{ gitcommit.stdout }}"
     state: directory
-    owner: evermade 
-    group: evermade 
+    owner: "{{ username }}"
+    group: "{{ username }}" 
     mode: 0755 
-    state: directory
 
 - name: Copy files
   synchronize:
-    src: /code/dist/
-    dest: /srv/www/deploy2.0/versions/{{ gitresult.stdout }}/
+    src: /code/dist/ # my ansible container code location when mounted
+    dest: "{{ versions_dir }}/{{ gitcommit.stdout }}/"
 
-- debug: msg="SHA-1 is {{ gitresult.stdout }}"
+- debug: msg="SHA-1 is {{ gitcommit.stdout }}"

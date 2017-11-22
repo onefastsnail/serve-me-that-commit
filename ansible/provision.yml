@@ -1,8 +1,12 @@
 ---
 - hosts: all
   user: evermade
-  sudo: true
+  become: yes
+  become_method: sudo
+  gather_facts: no
   vars:
     username: evermade
+    dist_dir: /srv/www/deploy2.0/dist
+    versions_dir: /srv/www/deploy2.0/versions
   roles:
    - { role: deploy, tags: [deploy] }
