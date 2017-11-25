@@ -38,7 +38,7 @@ auth.json
 backups/
 .env
 docker-compose-local.yml
-/ansible/hosts
+/project/ansible/hosts
 
 #ignore local persistant data such as databases
 data/
