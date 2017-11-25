@@ -17,6 +17,6 @@ php:
 app:
     image: alpine:3.6
     volumes:
-        - ./dist:/var/www/html/master
-        - ./versions:/var/www/html/versions
+        - ./project/app:/var/www/html/app
+        - ./sites:/var/www/html/sites
     command: "true"

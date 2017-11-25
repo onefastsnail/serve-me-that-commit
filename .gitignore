@@ -42,4 +42,3 @@ docker-compose-local.yml
 
 #ignore local persistant data such as databases
 data/
-versions/

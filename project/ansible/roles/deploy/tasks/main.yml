@@ -1,13 +1,14 @@
 ---
 - name: Get Commit
   command: git rev-parse --short HEAD
+  delegate_to: localhost
   args:
     chdir: "{{ dist_dir }}"
   register: gitcommit
 
 - name: Creates directory
   file: 
-    path: "{{ versions_dir }}/{{ gitcommit.stdout }}"
+    path: "{{ remote_dir }}/{{ gitcommit.stdout }}"
     state: directory
     owner: "{{ username }}"
     group: "{{ username }}" 
@@ -15,7 +16,11 @@
 
 - name: Copy files
   synchronize:
-    src: /code/dist/ # my ansible container code location when mounted
-    dest: "{{ versions_dir }}/{{ gitcommit.stdout }}/"
+    src: "{{ dist_dir }}/" # my ansible container code location when mounted
+    dest: "{{ remote_dir }}/{{ gitcommit.stdout }}/"
+    recursive: true
+    rsync_opts:
+      - "--exclude=.git"
+      - "--exclude=node_modules"
 
 - debug: msg="SHA-1 is {{ gitcommit.stdout }}"

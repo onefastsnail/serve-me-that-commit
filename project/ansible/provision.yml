@@ -6,7 +6,7 @@
   gather_facts: no
   vars:
     username: evermade
-    dist_dir: /srv/www/deploy2.0/dist
-    versions_dir: /srv/www/deploy2.0/versions
+    dist_dir: /code/project/app
+    remote_dir: /srv/www/deploy2.0/sites/versions
   roles:
    - { role: deploy, tags: [deploy] }
